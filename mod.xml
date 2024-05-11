@@ -1,0 +1,16 @@
+<table name="Operation days as missions"
+       author="BangL">
+    <auto_updates provider="modworkshop"
+                  id="47645"
+                  version="1.1" />
+    <hooks>
+        <hook source_file="lib/tweak_data/operationstweakdata"
+              file="operationstweakdata.lua" />
+        <hook source_file="lib/managers/progressionmanager"
+              file="progressionmanager.lua" />
+        <hook source_file="lib/managers/raidjobmanager"
+              file="raidjobmanager.lua" />
+        <hook source_file="lib/managers/playermanager"
+              file="playermanager.lua" />
+    </hooks>
+</table>
