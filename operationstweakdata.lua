@@ -1,9 +1,9 @@
-Hooks:PostHook(OperationsTweakData, "init", "operation_days_as_missions_init", function(self)
+Hooks:PostHook(OperationsTweakData, "init", "operation_days_as_missions_operations_tweak_data_init", function(self)
     -- go through all existing operations and semi-clone their events as fake missions..
     for _, operation_name in pairs(self._operations_index) do
         for i, events in ipairs(self.missions[operation_name].events_index_template) do -- we only use registered 'events' by reading events_index_template. the full events list would have more, non-existing ones.
-            local event_id = events
-                [1]                                                                     -- just take first one here, doesnt matter. starting it will randomize it anyways, according to the full template used above. the values we copy should be equal across all of them anyways
+            -- for event_id, just take first one here, doesnt matter. starting it will randomize it anyways, according to the full template used above. the values we copy should be equal across all of them anyways
+            local event_id = events[1]
             local event = self.missions[operation_name].events[event_id]
             local fake_mission = {
                 name_id = event.name_id,
@@ -19,8 +19,7 @@ Hooks:PostHook(OperationsTweakData, "init", "operation_days_as_missions_init", f
             }
 
             -- register fake mission
-            local mission_name = "fake_mission_" .. operation_name ..
-                "_" .. event_id -- and here, it just serves uniqueness
+            local mission_name = self:get_fake_mission_id(operation_name, event_id) -- and here, it just serves uniqueness
             self.missions[mission_name] = fake_mission
             table.insert(self._raids_index, mission_name)
 
@@ -34,4 +33,31 @@ Hooks:PostHook(OperationsTweakData, "init", "operation_days_as_missions_init", f
             -- (see RaidJobManager:set_selected_job and :start_next_event)
         end
     end
+    self._custom_icons_loaded = false
+    self:reload_fake_mission_icons()
 end)
+
+function OperationsTweakData:get_fake_mission_id(operation_name, event_id)
+    return "fake_mission_" .. operation_name .. "_" .. event_id
+end
+
+function OperationsTweakData:reload_fake_mission_icons()
+    local load_custom_icons = OperationDaysAsMissions.Options:GetValue("use_custom_icons")
+    if self._custom_icons_loaded == load_custom_icons then
+        return
+    end
+    self._custom_icons_loaded = load_custom_icons
+
+    for _, operation_name in pairs(self._operations_index) do
+        for i, events in ipairs(self.missions[operation_name].events_index_template) do
+            local event_id = events[1]
+            local mission_name = self:get_fake_mission_id(operation_name, event_id)
+            local icon_meta = load_custom_icons and
+                OperationDaysAsMissions:get_icon_meta_by_operation_name(operation_name) or nil
+            if self.missions[mission_name] then
+                self.missions[mission_name].icon_menu = (icon_meta and icon_meta.days >= i) and
+                    (operation_name .. "_" .. tostring(i)) or self.missions[operation_name].events[event_id].icon_menu
+            end
+        end
+    end
+end

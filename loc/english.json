@@ -1,0 +1,8 @@
+{
+  "operation_days_as_missions": "Operation days as missions",
+  "operation_days_as_missions_use_custom_icons": "Use custom mission list icons (by shinrax2)",
+  "operation_days_as_missions_reset": "Default options",
+  "operation_days_as_missions_reset_confirm": "Reset 'Operation days as missions' options to default values?",
+
+  "operation_days_as_missions_warning": "This is a mission, not an operation. This will not continue like a normal operation, and no operation bonus-experience will be rewarded."
+}

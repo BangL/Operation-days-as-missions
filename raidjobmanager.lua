@@ -78,6 +78,9 @@ end
 function RaidJobManager:notify_proxied_operation()
     if managers.chat then
         managers.chat:send_message(1, "SYSTEM",
-            "[Operation days as missions] This is a mission, not an operation. This will not continue like a normal operation, and no operation bonus-experience will be rewarded.")
+            "[" ..
+            managers.localization:text("operation_days_as_missions") ..
+            "] " ..
+            managers.localization:text("operation_days_as_missions_warning"))
     end
 end

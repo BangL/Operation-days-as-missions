@@ -1,11 +1,35 @@
 <table name="Operation days as missions"
-       author="BangL">
+       global_key="OperationDaysAsMissions"
+       author="BangL, shinrax2">
     <auto_updates provider="modworkshop"
                   id="47645"
-                  version="1.1" />
+                  version="1.2" />
+    <localization directory="loc"
+                  default="english.json">
+        <loc file="english.json"
+             language="english" />
+        <loc file="german.json"
+             language="german" />
+    </localization>
+    <options build_menu="false"
+             save_file="OperationDaysAsMissions.json">
+        <options>
+            <option name="use_custom_icons"
+                    text="operation_days_as_missions_use_custom_icons"
+                    type="bool"
+                    default_value="true" />
+        </options>
+    </options>
     <hooks>
+        <hook source_file="lib/entry"
+              file="OperationDaysAsMissions.lua"
+              type="pre" />
+        <hook source_file="lib/tweak_data/guitweakdata"
+              file="guitweakdata.lua" />
         <hook source_file="lib/tweak_data/operationstweakdata"
               file="operationstweakdata.lua" />
+        <hook source_file="lib/managers/menu/menucomponentmanager"
+              file="menucomponentmanager.lua" />
         <hook source_file="lib/managers/progressionmanager"
               file="progressionmanager.lua" />
         <hook source_file="lib/managers/raidjobmanager"
