@@ -3,7 +3,7 @@
        author="BangL, shinrax2">
     <auto_updates provider="modworkshop"
                   id="47645"
-                  version="1.3" />
+                  version="1.4" />
     <localization directory="loc"
                   default="english.json">
         <loc file="english.json"
