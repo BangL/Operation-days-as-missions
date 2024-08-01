@@ -12,6 +12,7 @@ Hooks:PostHook(OperationsTweakData, "init", "operation_days_as_missions_operatio
                 icon_hud = event.icon_hud,
                 start_in_stealth = event.start_in_stealth,
                 stealth_bonus = event.stealth_bonus,
+                xp = event.xp,
                 proxy_operation = operation_name,
                 proxy_event = i,
                 job_type = OperationsTweakData.JOB_TYPE_RAID,
