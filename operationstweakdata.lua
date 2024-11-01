@@ -43,7 +43,7 @@ function OperationsTweakData:get_fake_mission_id(operation_name, event_id)
 end
 
 function OperationsTweakData:reload_fake_mission_icons()
-    local load_custom_icons = OperationDaysAsMissions.Options:GetValue("use_custom_icons")
+    local load_custom_icons = OperationDaysAsMissions:GetOption("use_custom_icons")
     if self._custom_icons_loaded == load_custom_icons then
         return
     end

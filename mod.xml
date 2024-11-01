@@ -1,9 +1,8 @@
 <table name="Operation days as missions"
-       global_key="OperationDaysAsMissions"
        author="BangL, shinrax2">
     <auto_updates provider="modworkshop"
                   id="47645"
-                  version="1.4" />
+                  version="1.5" />
     <localization directory="loc"
                   default="english.json">
         <loc file="english.json"
@@ -11,15 +10,6 @@
         <loc file="german.json"
              language="german" />
     </localization>
-    <options build_menu="false"
-             save_file="OperationDaysAsMissions.json">
-        <options>
-            <option name="use_custom_icons"
-                    text="operation_days_as_missions_use_custom_icons"
-                    type="bool"
-                    default_value="true" />
-        </options>
-    </options>
     <hooks>
         <hook source_file="lib/entry"
               file="OperationDaysAsMissions.lua"

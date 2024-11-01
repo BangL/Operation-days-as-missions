@@ -12,8 +12,8 @@ function OperationDaysAsMissionsMenu:Init(root)
     self:Toggle({
         name = "operation_days_as_missions_use_custom_icons",
         text = "operation_days_as_missions_use_custom_icons",
-        default_value = OperationDaysAsMissions.Options:GetOption("use_custom_icons").default_value,
-        value = OperationDaysAsMissions.Options:GetValue("use_custom_icons"),
+        default_value = OperationDaysAsMissions:GetDefault("use_custom_icons"),
+        value = OperationDaysAsMissions:GetOption("use_custom_icons"),
         callback = callback(self, self, "ValueChanged", "use_custom_icons"),
     })
 
@@ -29,9 +29,9 @@ function OperationDaysAsMissionsMenu:Init(root)
 end
 
 function OperationDaysAsMissionsMenu:ValueChanged(key, value)
-    if OperationDaysAsMissions.Options:GetValue(key) ~= value then
+    if OperationDaysAsMissions:GetOption(key) ~= value then
         self["_" .. key .. "_changed"] = true
-        OperationDaysAsMissions.Options:SetValue(key, value)
+        OperationDaysAsMissions:SetOption(key, value)
     end
 end
 
@@ -47,9 +47,9 @@ function OperationDaysAsMissionsMenu:Reset(value, item)
             [2] = {
                 text = managers.localization:text("dialog_yes"),
                 callback = function()
-                    OperationDaysAsMissions.Options:LoadDefaultValues()
+                    OperationDaysAsMissions:LoadDefaults()
                     self:ReloadMenu()
-                    OperationDaysAsMissions.Options:Save()
+                    OperationDaysAsMissions:Save()
                 end,
             },
         },
@@ -58,7 +58,7 @@ function OperationDaysAsMissionsMenu:Reset(value, item)
 end
 
 function OperationDaysAsMissionsMenu:Close()
-    OperationDaysAsMissions.Options:Save()
+    OperationDaysAsMissions:Save()
     if self._use_custom_icons_changed then
         tweak_data.operations:reload_fake_mission_icons()
     end

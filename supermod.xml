@@ -1,0 +1,31 @@
+<mod name="Operation days as missions"
+      author="BangL, shinrax2"
+      version="1.5"
+      color="60 60 60">
+    <updates>
+        <update provider="modworkshop"
+                identifier="47645" />
+    </updates>
+    <localization directory="loc">
+        <loc file="english.json"
+             language="english" />
+        <loc file="german.json"
+             language="german" />
+    </localization>
+    <hooks>
+        <pre hook_id="lib/entry"
+             script_path="OperationDaysAsMissions.lua" />
+        <post hook_id="lib/tweak_data/guitweakdata"
+              script_path="guitweakdata.lua" />
+        <post hook_id="lib/tweak_data/operationstweakdata"
+              script_path="operationstweakdata.lua" />
+        <post hook_id="lib/managers/menu/menucomponentmanager"
+              script_path="menucomponentmanager.lua" />
+        <post hook_id="lib/managers/progressionmanager"
+              script_path="progressionmanager.lua" />
+        <post hook_id="lib/managers/raidjobmanager"
+              script_path="raidjobmanager.lua" />
+        <post hook_id="lib/managers/playermanager"
+              script_path="playermanager.lua" />
+    </hooks>
+</mod>
