@@ -1,5 +1,7 @@
 local set_selected_job_original = RaidJobManager.set_selected_job
 local start_next_event_original = RaidJobManager.start_next_event
+local save_game_original = RaidJobManager.save_game
+local load_game_original = RaidJobManager.load_game
 
 function RaidJobManager:set_selected_job(job_id, ...)
     if not Network:is_server() then
@@ -82,5 +84,38 @@ function RaidJobManager:notify_proxied_operation()
             managers.localization:text("operation_days_as_missions") ..
             "] " ..
             managers.localization:text("operation_days_as_missions_warning"))
+    end
+end
+
+function RaidJobManager:save_game(data, ...)
+    if not self._current_job or not self._current_job.is_fake_operation then
+        save_game_original(self, data, ...)
+    end
+end
+
+function RaidJobManager:load_game(data, ...)
+    load_game_original(self, data, ...)
+    local new_table = {}
+    local fake_ops = 0
+    local corrupt_ids = 0
+    for slot_id, slot in pairs(self._save_slots or {}) do
+        if slot.current_job.is_fake_operation then
+            log(string.format("[Operation days as missions] deleting falsly saved fake-operation data at slot: %s.",
+                tostring(slot_id)))
+            fake_ops = fake_ops + 1
+        else
+            if type(slot_id) ~= "number" then
+                log(string.format("[Operation days as missions] fixing corrupted operation data slot id: %s.",
+                    tostring(slot_id)))
+                corrupt_ids = corrupt_ids + 1
+            end
+            table.insert(new_table, slot)
+        end
+    end
+    if fake_ops > 0 or corrupt_ids > 0 then
+        self._save_slots = new_table
+        if data.job_manager then
+            data.job_manager.slots = self._save_slots
+        end
     end
 end
