@@ -114,7 +114,7 @@ function RaidJobManager:load_game(data, ...)
     end
     if fake_ops > 0 or corrupt_ids > 0 then
         self._save_slots = new_table
-        if data.job_manager then
+        if data.job_manager and data.job_manager.slots then
             data.job_manager.slots = self._save_slots
         end
     end
