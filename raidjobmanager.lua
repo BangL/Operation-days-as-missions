@@ -80,17 +80,19 @@ end
 function RaidJobManager:notify_proxied_operation()
     if managers.chat then
         managers.chat:send_message(1, "SYSTEM",
-            "[" ..
-            managers.localization:text("operation_days_as_missions") ..
-            "] " ..
+            "[" .. managers.localization:text("operation_days_as_missions") .. "] " ..
             managers.localization:text("operation_days_as_missions_warning"))
     end
 end
 
 function RaidJobManager:save_game(data, ...)
-    if not self._current_job or not self._current_job.is_fake_operation then
-        save_game_original(self, data, ...)
+    -- drop failed/cancelled fake operation
+    if self._need_to_save and self._current_job and self._current_job.is_fake_operation then
+        self._need_to_save = nil
+        log(string.format("[Operation days as missions] prevented saving fake-operation at slot: %s",
+            tostring(self._current_save_slot)))
     end
+    save_game_original(self, data, ...)
 end
 
 function RaidJobManager:load_game(data, ...)
