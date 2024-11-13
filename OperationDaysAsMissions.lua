@@ -73,38 +73,6 @@ if not _G.OperationDaysAsMissions.setup then
         return nil
     end
 
-    function OperationDaysAsMissions:getFilesR(root, sub, files)
-        local sub = sub or ''
-        local files = files or {}
-        local path = Application:nice_path(root .. sub, true)
-        for _, file in ipairs(SystemFS:list(path)) do
-            table.insert(files, '.' .. sub .. '/' .. file)
-        end
-        for _, sub_dir in ipairs(SystemFS:list(path, true)) do
-            files = self:getFilesR(root, sub .. '/' .. sub_dir, files)
-        end
-        return files
-    end
-
-    function OperationDaysAsMissions:PreloadAssets()
-        local new_textures = {}
-        local assets = Application:nice_path(self.mod_path .. "/assets", false)
-        for _, file in ipairs(self:getFilesR(assets)) do
-            local f = string.sub(file, 3)
-            local dot = string.find(string.reverse(f), '%.')
-            local id = string.sub(f, 1, -1 - dot)
-            local ext = string.sub(f, 1 - dot)
-            local file_id = Idstring(id)
-            DB:create_entry(Idstring(ext), file_id, assets .. '/' .. id .. '.' .. ext)
-            if (ext == "texture") then
-                table.insert(new_textures, file_id)
-            end
-        end
-
-        Application:reload_textures(new_textures)
-    end
-
-    OperationDaysAsMissions:PreloadAssets()
     OperationDaysAsMissions:LoadDefaults()
     OperationDaysAsMissions:Load()
 end

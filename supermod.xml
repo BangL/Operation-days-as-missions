@@ -1,7 +1,7 @@
 <mod name="Operation days as missions"
-      author="BangL, shinrax2"
-      version="1.7"
-      color="60 60 60">
+     author="BangL, shinrax2"
+     version="1.7"
+     color="60 60 60">
     <updates>
         <update provider="modworkshop"
                 identifier="47645" />
@@ -12,6 +12,10 @@
         <loc file="german.json"
              language="german" />
     </localization>
+    <assets base_path="assets/"
+            load="startup">
+        <file name="ui/atlas/raid_atlas_opdays.texture" />
+    </assets>
     <hooks>
         <pre hook_id="lib/entry"
              script_path="OperationDaysAsMissions.lua" />
