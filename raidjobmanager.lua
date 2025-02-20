@@ -79,7 +79,7 @@ end
 
 function RaidJobManager:notify_proxied_operation()
     if managers.chat then
-        managers.chat:send_message(1, "SYSTEM",
+        managers.chat:send_message(ChatManager.GAME, "SYSTEM",
             "[" .. managers.localization:text("operation_days_as_missions") .. "] " ..
             managers.localization:text("operation_days_as_missions_warning"))
     end
